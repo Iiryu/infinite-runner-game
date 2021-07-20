@@ -9,13 +9,12 @@ public class Player : MonoBehaviour
     public float x;
     public Vector3 p;
     public bool groundcheck;
-    // Start is called before the first frame update
+    // Start is called before the first frame updateaaa
     void Start()
     {
         speed = 0.04f;
         p = this.gameObject.transform.position;
         x = 0;
-        Invoke("Test", 0.1f);
         groundcheck = true;
     }
 

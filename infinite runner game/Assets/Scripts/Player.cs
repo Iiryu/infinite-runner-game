@@ -5,47 +5,82 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float speed = 1f;
-    public bool dead;
     public float x;
     public Vector3 p;
     public bool groundcheck;
+    public GameObject player;
+    public bool stop;
+    public float sens;
+    public Manager m;
+    
     // Start is called before the first frame updateaaa
     void Start()
     {
-        speed = 0.04f;
-        p = this.gameObject.transform.position;
+        speed = 5f;
         x = 0;
         groundcheck = true;
+        stop = false;
+        sens = 10f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Control();
         DeadCheck();
+        Dead();
+        if (stop == false)
+        {
+            Control();
+            Gravity();
+        }
     }
 
     void Control()
     {
+        transform.position += transform.forward * 10 * Time.deltaTime;
 
         if (Input.GetMouseButton(0))//left click
         {
-            float speed = 0.5f;
-            x = Input.GetAxis("Mouse X") * speed;
+            x = Input.GetAxis("Mouse X");
+            transform.position += transform.right * speed * sens * Time.deltaTime * x;
         }
         if (Input.GetKeyDown(KeyCode.Space) && groundcheck == true)
         {
-            Debug.Log("jump");
-            groundcheck = false;
+            Jump();
         }
     }
 
     private void DeadCheck()
     {
-        if(p.y <= 0)
+        if(this.gameObject.transform.position.y < -1)
         {
-            dead = true;
+            m.gameOver = true;
         }
+        
+    }
+
+    private void Dead()
+    {
+        if(m.gameOver == true)
+        {
+            stop = true;
+            this.gameObject.transform.position = new Vector3(0, 0, 0);
+        }
+    }
+
+    public void Gravity()
+    {
+        if(groundcheck == false)
+        {
+            float grabity = 3f;
+            transform.position += transform.up * -grabity * Time.deltaTime;
+        }
+    }
+
+    public void Jump()
+    {
+        transform.Translate(0, 0, 0);
+        Debug.Log("jump");
     }
 
 
@@ -55,7 +90,7 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Obstacle")
         {
-            dead = true;
+            m.gameOver = true;
         }
         else
         {
@@ -63,11 +98,19 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        if(collision.gameObject.tag == "Ground")
+        if (other.gameObject.tag == "Ground")
         {
             groundcheck = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            groundcheck = false;
         }
     }
 
@@ -76,5 +119,9 @@ public class Player : MonoBehaviour
         Debug.Log("");
         x = 0;
     }
+
+    
+
+    
 
 }

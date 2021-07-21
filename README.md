@@ -1,2 +1,2 @@
-# infinite runner game
- By noob
+# infinite-runner-game
+ by noob

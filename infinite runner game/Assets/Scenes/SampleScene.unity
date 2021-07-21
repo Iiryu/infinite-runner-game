@@ -926,8 +926,6 @@ MonoBehaviour:
   easy:
   - {fileID: 6569391009558031731, guid: 3f21d9bc9466baa43837efd09608ce53, type: 3}
   normal:
-  - {fileID: 4864277193341860445, guid: 68c5241acd14c9142953c7e77209fc37, type: 3}
-  - {fileID: 6377579174821159202, guid: f898573bfd399994ea7210527761d983, type: 3}
   - {fileID: 6490296101090336673, guid: 633f7b48afc2c2f42a4d356dc76397d0, type: 3}
   hard:
   - {fileID: 6883241083432651268, guid: ac20efb125319d84e9fd8e0f558d0f91, type: 3}
